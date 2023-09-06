@@ -12,9 +12,9 @@ from langchain.schema import Document
 
 import config
 import embedding.embedding_utils
+import knowledge_base.basic_knowledge
 
 _VECTOR_STORE_TICKS = {}
-
 
 @lru_cache(config.CACHED_VS_NUM)
 def load_vector_store(knowledge_base_name: str, tick: int = 0, ):
@@ -25,9 +25,13 @@ def load_vector_store(knowledge_base_name: str, tick: int = 0, ):
     if "index.faiss" in os.listdir(vs_path):
         search_index = FAISS.load_local(vs_path, embeddings, normalize_L2=True)
     else:
+        if knowledge_base_name == knowledge_base.basic_knowledge.basic_knowledge_name:
+            doc = Document(page_content="init", metadata={})
+            search_index = FAISS.from_documents([doc], embeddings, normalize_L2=True)
+        else:
+            docs = [Document(page_content=text, metadata={}) for text in knowledge_base.basic_knowledge.basic_knowledge]
+            search_index = FAISS.from_documents(docs, embeddings, normalize_L2=True)
         # create an empty vector store
-        doc = Document(page_content="init", metadata={})
-        search_index = FAISS.from_documents([doc], embeddings, normalize_L2=True)
         ids = [k for k, v in search_index.docstore._dict.items()]
         search_index.delete(ids)
         search_index.save_local(vs_path)
