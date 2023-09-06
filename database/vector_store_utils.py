@@ -33,7 +33,7 @@ def load_vector_store(knowledge_base_name: str, tick: int = 0, ):
             search_index = FAISS.from_documents(docs, embeddings, normalize_L2=True)
         # create an empty vector store
         ids = [k for k, v in search_index.docstore._dict.items()]
-        search_index.delete(ids)
+        # search_index.delete(ids)
         search_index.save_local(vs_path)
 
     if tick == 0:  # vector store is loaded first time
