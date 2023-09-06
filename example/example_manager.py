@@ -7,7 +7,7 @@ from transformers.pipelines import task
 from langchain.prompts.example_selector import SemanticSimilarityExampleSelector
 
 import config
-import prompt_examples
+from example import prompt_examples
 from fastapi import Body
 from knowledge_base import basic_knowledge
 from embedding import embedding_utils
