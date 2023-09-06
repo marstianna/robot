@@ -26,8 +26,11 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
     #由于我设置的top_k=1,所以这里最多只有一个元素
     doc = docs[0]
 
+
     #获取到根据输入匹配到的对应的examples
-    return example_selector.select_examples({"input": query})
+    examples = [example_.update({"basic_knowledge":doc.page_content}) for example_ in example_selector.select_examples({"input": query})]
+
+    return examples
 
     # for selected_example in selected_examples:
     #     template = PromptTemplate.from_template(template="role: {role}\nused basic knowledge: {basic_knowledge}\nQuestion: {"
@@ -46,7 +49,6 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
     #         answer += token
     #     yield json.dumps({"answer": answer},
     #                      ensure_ascii=False)
-
 
 
 
