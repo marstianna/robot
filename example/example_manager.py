@@ -21,7 +21,7 @@ example_selector = SemanticSimilarityExampleSelector.from_examples(prompt_exampl
 
 def search_examples(query: str = Body(..., description="用户输入", examples=["你好"])):
     #首先从基础知识库里面检索对应的基础只是
-    docs = vector_store_utils.search_in_vector_store(query=query, knowledge_base_name=basic_knowledge.basic_knowledge_name, top_k=1)
+    docs = vector_store_utils.search_in_vector_store(query=query, knowledge_base_name=basic_knowledge.basic_knowledge_name,top_k=1)
 
     #由于我设置的top_k=1,所以这里最多只有一个元素
     doc = docs[0]

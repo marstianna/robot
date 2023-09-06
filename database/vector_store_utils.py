@@ -1,4 +1,7 @@
+from types import NoneType
+
 from langchain import FAISS
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.embeddings.base import Embeddings
 from functools import lru_cache
 from typing import List
@@ -8,13 +11,15 @@ import os
 from langchain.schema import Document
 
 import config
+import embedding.embedding_utils
 
 _VECTOR_STORE_TICKS = {}
 
 
 @lru_cache(config.CACHED_VS_NUM)
-def load_vector_store(knowledge_base_name: str, embeddings: Embeddings = None, tick: int = 0, ):
+def load_vector_store(knowledge_base_name: str, tick: int = 0, ):
     vs_path = get_vs_path(knowledge_base_name)
+    embeddings = embedding.embedding_utils.embeddings
     if not os.path.exists(vs_path):
         os.makedirs(vs_path)
     if "index.faiss" in os.listdir(vs_path):
@@ -36,10 +41,8 @@ def search_in_vector_store(query: str,
                            top_k: int,
                            knowledge_base_name: str,
                            score_threshold: float = config.SCORE_THRESHOLD,
-                           embeddings: Embeddings = None,
                            ) -> List[Document]:
-    search_index = load_vector_store(knowledge_base_name,
-                                     embeddings=embeddings,
+    search_index = load_vector_store(knowledge_base_name = knowledge_base_name,
                                      tick=_VECTOR_STORE_TICKS.get(knowledge_base_name))
     docs = search_index.similarity_search_with_score(query, k=top_k, score_threshold=score_threshold)
     return docs
