@@ -39,4 +39,4 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
     examples = [example_.update({"basic_knowledge": context}) for example_ in
                 example_selector.select_examples({"input": query})]
 
-    return examples
+    return context,examples
