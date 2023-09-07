@@ -12,4 +12,8 @@ basic_knowledge = [
     "新加坡云下机房的代号为sg52，对应的单元为lazada_sg_2",
     "印尼云上机房的代号为os30，对应的单元为rg_id",
     "印尼云下机房的代号为sg52，对应的单元为lazada_id",
+    "多租户针对TDDL做了改造，如果您的应用使用了数据库datetime字段类型，那么在您的应用中请添加global.landlord.mybatis.type.enabled=false",
+    "ScheduleX2的国际化新加坡机房的域名为sg.schedule2.alibaba-inc.com",
+    "ScheduleX2的印尼机房的域名为id.schedule2.alibaba-inc.com",
+
 ]

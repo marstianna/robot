@@ -43,7 +43,7 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
     for example_ in matched_examples:
         example_.update({"basic_knowledge": context})
 
-    return matched_examples
+    return context,matched_examples
 
 
 @lru_cache(1)

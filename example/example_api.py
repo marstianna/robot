@@ -20,7 +20,10 @@ async def delete_example():
 
 
 async def query_examples(query: str):
-    examples = example_service.search_examples(query)
+    context,examples = example_service.search_examples(query)
+    if examples is None:
+        return context
+
     for example in examples:
         template = PromptTemplate(input_variables=["role", "basic_knowledge", "input", "output", "query"],
                                   template="{role}\n{basic_knowledge}\ninput: {input}\noutput: "
