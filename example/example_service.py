@@ -1,6 +1,7 @@
 from langchain import FAISS, FewShotPromptTemplate, PromptTemplate, LLMChain
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.chat_models import ChatOpenAI
+from langchain.schema import Document
 from transformers.pipelines import task
 
 from langchain.prompts.example_selector import SemanticSimilarityExampleSelector
@@ -20,11 +21,17 @@ example_selector = SemanticSimilarityExampleSelector.from_examples(prompt_exampl
                                                                    k=config.VECTOR_SEARCH_TOP_K)
 
 
+class DocumentWithScore(Document):
+    score: float = None
+
+
 def search_examples(query: str = Body(..., description="用户输入", examples=["你好"])):
     # 首先从基础知识库里面检索对应的基础只是
     docs = vector_store_utils.search_in_vector_store(query=query,
                                                      knowledge_base_name=basic_knowledge.basic_knowledge_name,
                                                      top_k=5)
+
+    print(docs)
 
     context = "\n".join([doc.page_content for doc in docs])
 

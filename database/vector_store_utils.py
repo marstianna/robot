@@ -20,6 +20,8 @@ _VECTOR_STORE_TICKS = {}
 embeddings = embedding.embedding_utils.embeddings
 
 
+class DocumentWithScore(Document):
+    score: float = None
 @lru_cache
 def get_vector_store_by_name(knowledge_base_name: str) -> VST:
     vs_path = get_vs_path(knowledge_base_name)
@@ -40,9 +42,12 @@ def search_in_vector_store(query: str,
                            top_k: int,
                            knowledge_base_name: str,
                            score_threshold: float = config.SCORE_THRESHOLD,
-                           ) -> list[tuple[Document, float]]:
+                           ) -> list[DocumentWithScore]:
     search_index = get_vector_store_by_name(knowledge_base_name=knowledge_base_name)
-    return search_index.similarity_search_with_score(query, k=top_k, score_threshold=score_threshold)
+
+    origin_docs = search_index.similarity_search_with_score(query, k=top_k, score_threshold=score_threshold)
+    docs = [DocumentWithScore(**x[0].dict(), score=x[1]) for x in origin_docs]
+    return docs
 
 
 def get_vs_path(knowledge_base_name: str):
