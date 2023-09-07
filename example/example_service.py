@@ -31,7 +31,7 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
                                                      top_k=3)
 
 
-    context = "\n".join([doc.page_content for doc in docs])
+    context = "。".join([doc.page_content for doc in docs])
 
     print("search_examples:"+context)
 
