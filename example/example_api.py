@@ -26,6 +26,7 @@ async def query_examples(query: str):
                                   template="role: {role}\nbasic_knowledge: {basic_knowledge}\ninput: {input}\noutput: "
                                            "{output}\ninput: {query}\noutput: ").partial(
             **example)
+        print("template info :"+template.format(query=query))
         call = llm_utils.call(prompt=template.format(query=query), top_k=2)
         print(call)
 
