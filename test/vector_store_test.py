@@ -8,8 +8,17 @@ from langchain.schema import Document
 if __name__ == "__main__":
     embeddings = HuggingFaceEmbeddings(model_name="moka-ai/m3e-large", model_kwargs={'device': "cuda"})
     factors = [
-        "LAZADA主要运营的国家为东南亚6个国家，分别为：新加坡(国家代号为SG),马来西亚(国家代号为MY),越南(国家代号为VN),菲律宾(国家代号为PH),泰国(国家代号为TH),印度尼西亚(国家代号为ID)简称印尼",
-        "LAZADA的部署形式为：SG,MY,VN,PH,TH这5个国家合并部署在新加坡机房包含新加坡云上机房(机房为os30,单元为rg_sg)和新加坡云下机房(机房为sg52,单元为lazada_sg_2),ID单>独部署在印尼机房包含印尼云上机房(机房为id137,单元为rg_id)和印尼云下机房(机房为id35,单元为lazada_id)"]
+        "LAZADA主要运营的国家为东南亚6个国家，分别为：新加坡,马来西亚,越南,菲律宾,泰国,印度尼西亚",
+        "新加坡的国家代号为SG，线上环境部署在新加坡云上机房和新加坡云下机房",
+        "马来西亚的国家代号为MY，线上环境部署在新加坡云上机房和新加坡云下机房",
+        "越南的国家代号为VN，线上环境部署在新加坡云上机房和新加坡云下机房",
+        "菲律宾的国家代号为PH，线上环境部署在新加坡云上机房和新加坡云下机房",
+        "泰国的国家代号为TH，线上环境部署在新加坡云上机房和新加坡云下机房",
+        "印度尼西亚的国家代号为ID，简称为印尼，线上环境部署在印尼云上机房和印尼云下机房",
+        "新加坡云上机房的代号为os30，对应的单元为rg_sg",
+        "新加坡云下机房的代号为sg52，对应的单元为lazada_sg_2",
+        "印尼云上机房的代号为os30，对应的单元为rg_id",
+        "印尼云下机房的代号为sg52，对应的单元为lazada_id"]
     embeddings.embed_documents(factors)
 
     vs_path = os.path.join(os.path.join(os.path.dirname(os.path.dirname(__file__)), "knowledge_base"),
