@@ -18,8 +18,6 @@ async def delete_example():
 
 async def query_examples(query: str):
     context,examples = example_service.search_examples(query)
-    print(context)
-    print(examples)
     return
 
 
