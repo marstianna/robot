@@ -31,9 +31,10 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
                                                      knowledge_base_name=basic_knowledge.basic_knowledge_name,
                                                      top_k=5)
 
-    print(docs)
 
     context = "\n".join([doc.page_content for doc in docs])
+
+    print("search_examples:"+context)
 
     # 获取到根据输入匹配到的对应的examples
     examples = [example_.update({"basic_knowledge": context}) for example_ in
