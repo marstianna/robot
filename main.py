@@ -12,6 +12,7 @@ from example.example_api import add_examples, delete_example, query_examples, li
 import config
 from fastapi import FastAPI
 from database import vector_store_utils
+from knowledge_base import basic_knowledge
 
 
 async def document():
