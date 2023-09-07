@@ -13,6 +13,7 @@ import config
 from fastapi import FastAPI
 from database import vector_store_utils
 from knowledge_base import basic_knowledge
+from langchain.schema import Document
 
 
 async def document():
