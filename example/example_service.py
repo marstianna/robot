@@ -32,23 +32,6 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
 
     return examples
 
-    # for selected_example in selected_examples:
-    #     template = PromptTemplate.from_template(template="role: {role}\nused basic knowledge: {basic_knowledge}\nQuestion: {"
-    #                                           "input}\nAnswer :{output}",
-    #                                  partial_variables=selected_example,
-    #                                  suffix="Question: {input}"
-    #                                  )
-    #     template.partial(basic_knowledge="doc.page_content")
-    #
-    #     template.format()
-    #
-    #     chain = LLMChain(prompt=template, llm=model)
-    #
-    #     answer = ""
-    #     async for token in callback.aiter():
-    #         answer += token
-    #     yield json.dumps({"answer": answer},
-    #                      ensure_ascii=False)
 
 
 

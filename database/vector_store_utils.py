@@ -4,11 +4,12 @@ from langchain import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.embeddings.base import Embeddings
 from functools import lru_cache
-from typing import List
+from typing import List, Tuple
 
 import os
 
 from langchain.schema import Document
+from langchain.vectorstores.base import VST
 
 import config
 import embedding.embedding_utils
@@ -16,40 +17,33 @@ import knowledge_base.basic_knowledge
 
 _VECTOR_STORE_TICKS = {}
 
-@lru_cache(config.CACHED_VS_NUM)
-def load_vector_store(knowledge_base_name: str, tick: int = 0, ):
+embeddings = embedding.embedding_utils.embeddings
+
+
+@lru_cache
+def get_vector_store_by_name(knowledge_base_name: str) -> VST:
     vs_path = get_vs_path(knowledge_base_name)
-    embeddings = embedding.embedding_utils.embeddings
-    if not os.path.exists(vs_path):
-        os.makedirs(vs_path)
-    if "index.faiss" in os.listdir(vs_path):
-        search_index = FAISS.load_local(vs_path, embeddings, normalize_L2=True)
+    if knowledge_base_name in os.listdir(config.KB_ROOT_PATH):
+        return FAISS.load_local(vs_path, embeddings, normalize_L2=True)
     else:
-        if knowledge_base_name == knowledge_base.basic_knowledge.basic_knowledge_name:
-            doc = Document(page_content="init", metadata={})
-            search_index = FAISS.from_documents([doc], embeddings, normalize_L2=True)
-        else:
-            docs = [Document(page_content=text, metadata={}) for text in knowledge_base.basic_knowledge.basic_knowledge]
-            search_index = FAISS.from_documents(docs, embeddings, normalize_L2=True)
-        # create an empty vector store
-        ids = [k for k, v in search_index.docstore._dict.items()]
-        search_index.delete(ids)
-        search_index.save_local(vs_path)
+        return init_vector_store(knowledge_base_name, [Document(page_content="init", metadata={})])
 
-    if tick == 0:  # vector store is loaded first time
-        _VECTOR_STORE_TICKS[knowledge_base_name] = 0
 
-    return search_index
+def init_vector_store(knowledge_base_name: str, docs: List[Document]) -> VST:
+    vs_path = get_vs_path(knowledge_base_name)
+    faiss = FAISS.from_documents(docs, embeddings, normalize_L2=True)
+    faiss.save_local(vs_path)
+    return faiss
+
 
 def search_in_vector_store(query: str,
                            top_k: int,
                            knowledge_base_name: str,
                            score_threshold: float = config.SCORE_THRESHOLD,
-                           ) -> List[Document]:
-    search_index = load_vector_store(knowledge_base_name = knowledge_base_name,
-                                     tick=_VECTOR_STORE_TICKS.get(knowledge_base_name))
-    docs = search_index.similarity_search_with_score(query, k=top_k, score_threshold=score_threshold)
-    return docs
+                           ) -> list[tuple[Document, float]]:
+    search_index = get_vector_store_by_name(knowledge_base_name=knowledge_base_name)
+    return search_index.similarity_search_with_score(query, k=top_k, score_threshold=score_threshold)
+
 
 def get_vs_path(knowledge_base_name: str):
     return os.path.join(config.KB_ROOT_PATH, knowledge_base_name)

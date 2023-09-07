@@ -1,23 +1,30 @@
 from langchain.chat_models import ChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
+from langchain.schema import Document
 from transformers import AutoTokenizer, AutoModel
 import datetime
 import torch
 
 import config
+import database.vector_store_utils
+from knowledge_base import basic_knowledge
 
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True)
 model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).cuda()
 
-model.eval()
 
-def call(prompt: str,max_length=2048,top_p=0.7,temperature=0.95,top_k=1):
+def start_llm():
+    model.eval()
+
+
+
+def call(prompt: str, max_length=2048, top_p=0.7, temperature=0.95, top_k=1):
     response, history = model.chat(tokenizer,
                                    prompt,
-                                   max_length=max_length if max_length else 2048,
-                                   top_p=top_p if top_p else 0.7,
-                                   top_k=top_k if top_k else 1,
-                                   temperature=temperature if temperature else 0.95)
+                                   max_length=max_length,
+                                   top_p=top_p,
+                                   top_k=top_k,
+                                   temperature=temperature)
     now = datetime.datetime.now()
     time = now.strftime("%Y-%m-%d %H:%M:%S")
     answer = {

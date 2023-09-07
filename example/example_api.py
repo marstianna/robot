@@ -1,4 +1,4 @@
-from example import example_manager
+from example import example_service
 
 
 async def reload_examples():
@@ -17,7 +17,7 @@ async def delete_example():
 
 
 async def query_examples(query: str):
-    examples = example_manager.search_examples("测试数据")
+    examples = example_service.search_examples("测试数据")
     print(examples)
     return
 

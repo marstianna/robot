@@ -1,20 +1,17 @@
 import sys
 import os
 
-import example.example_api
+from llm import llm_utils
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import argparse
 import uvicorn
-from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
-from example.example_api import add_examples,delete_example,query_examples,list_examples,reload_examples
-from typing import List
+from example.example_api import add_examples, delete_example, query_examples, list_examples, reload_examples
 import config
 from fastapi import FastAPI
-
-# nltk.data.path = [NLTK_DATA_PATH] + nltk.data.path
+from database import vector_store_utils
 
 
 async def document():
@@ -45,20 +42,20 @@ def create_app():
 
     # Tag: ExampleManager
     app.get("/examples/reload",
-             tags=["ExampleManager"],
-             summary="重载examples")(reload_examples)
+            tags=["ExampleManager"],
+            summary="重载examples")(reload_examples)
     app.get("/examples/query",
-             tags=["ExampleManager"],
-             summary="查询examples")(query_examples)
+            tags=["ExampleManager"],
+            summary="查询examples")(query_examples)
     app.get("/examples/add",
-             tags=["ExampleManager"],
-             summary="添加example")(add_examples)
+            tags=["ExampleManager"],
+            summary="添加example")(add_examples)
     app.get("/examples/list",
-             tags=["ExampleManager"],
-             summary="获取所有examples")(list_examples)
+            tags=["ExampleManager"],
+            summary="获取所有examples")(list_examples)
     app.get("/examples/delete",
-             tags=["ExampleManager"],
-             summary="删除examples")(delete_example)
+            tags=["ExampleManager"],
+            summary="删除examples")(delete_example)
 
     return app
 
@@ -76,6 +73,13 @@ def run_api(host, port, **kwargs):
                     )
     else:
         uvicorn.run(app, host=host, port=port)
+
+
+def init():
+    llm_utils.start_llm()
+    vector_store_utils.init_vector_store(knowledge_base_name=basic_knowledge.basic_knowledge_name,
+                                         docs=[Document(page_content=text, metadata={}) for text in
+                                               basic_knowledge.basic_knowledge])
 
 
 if __name__ == "__main__":
