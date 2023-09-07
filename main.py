@@ -83,6 +83,7 @@ def init():
 
 
 if __name__ == "__main__":
+    init()
     parser = argparse.ArgumentParser(prog='langchain-ChatGLM',
                                      description='About langchain-ChatGLM, local knowledge based ChatGLM with langchain'
                                                  ' ｜ 基于本地知识库的 ChatGLM 问答')

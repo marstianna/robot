@@ -20,8 +20,8 @@ prompt_examples = [
         "role": "你现在是一个答疑机器人，需要根据用户的输入，输出推荐的配置信息。",
         "input": "获取LAZADA_ID的ScheduleX2的配置",
         "output": """
-                    {tanent_id}.global.landlord.schedulerx2.groupId={your_group}
-                    {tanent_id}.global.landlord.schedulerx2.appKey={your_app_key}
+                    LAZADA_ID.global.landlord.schedulerx2.groupId={your_group}
+                    LAZADA_ID.global.landlord.schedulerx2.appKey={your_app_key}
                     global.landlord.schedulerx2.domainName=schedulerx-lazada-sg-landlord.alibaba-inc.com
                     """
     },
