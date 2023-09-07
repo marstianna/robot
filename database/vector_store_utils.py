@@ -1,10 +1,7 @@
-from types import NoneType
 
 from langchain import FAISS
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.embeddings.base import Embeddings
 from functools import lru_cache
-from typing import List, Tuple
+from typing import List
 
 import os
 
@@ -12,12 +9,9 @@ from langchain.schema import Document
 from langchain.vectorstores.base import VST
 
 import config
-import embedding.embedding_utils
-import knowledge_base.basic_knowledge
+from embedding import embedding_utils
 
 _VECTOR_STORE_TICKS = {}
-
-embeddings = embedding.embedding_utils.embeddings
 
 
 class DocumentWithScore(Document):
@@ -26,14 +20,14 @@ class DocumentWithScore(Document):
 def get_vector_store_by_name(knowledge_base_name: str) -> VST:
     vs_path = get_vs_path(knowledge_base_name)
     if knowledge_base_name in os.listdir(config.KB_ROOT_PATH):
-        return FAISS.load_local(vs_path, embeddings, normalize_L2=True)
+        return FAISS.load_local(vs_path, embedding_utils.get_embeddings(), normalize_L2=True)
     else:
         return init_vector_store(knowledge_base_name, [Document(page_content="init", metadata={})])
 
 
 def init_vector_store(knowledge_base_name: str, docs: List[Document]) -> VST:
     vs_path = get_vs_path(knowledge_base_name)
-    faiss = FAISS.from_documents(docs, embeddings, normalize_L2=True)
+    faiss = FAISS.from_documents(docs, embedding_utils.get_embeddings(), normalize_L2=True)
     faiss.save_local(vs_path)
     return faiss
 
