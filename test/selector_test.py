@@ -46,4 +46,5 @@ if __name__ == "__main__":
                                                                        k=1)
 
     query="我需要跨单元注册到lazada云上"
-    example_selector.select_examples({"input": query})
+    examples = example_selector.select_examples({"input": query})
+    print(examples)
