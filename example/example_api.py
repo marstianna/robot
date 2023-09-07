@@ -1,4 +1,7 @@
+from langchain import PromptTemplate
+
 from example import example_service
+from llm import llm_utils
 
 
 async def reload_examples():
@@ -17,8 +20,14 @@ async def delete_example():
 
 
 async def query_examples(query: str):
-    context,examples = example_service.search_examples(query)
-    return
+    examples = example_service.search_examples(query)
+    for example in examples:
+        template = PromptTemplate(input_variables=["role", "basic_knowledge", "input", "output", "query"],
+                                  template="role: {role}\nbasic_knowledge: {basic_knowledge}\ninput: {input}\noutput: "
+                                           "{output}\ninput: {query}\noutput: ").partial(
+            **example)
+        yield llm_utils.call(prompt=template.format(query=query), top_k=2)
+
 
 
 async def add_examples():

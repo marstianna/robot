@@ -40,10 +40,10 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
 
     print(matched_examples)
 
-    examples = [example_.update({"basic_knowledge": context}) for example_ in
-                matched_examples]
+    for example_ in matched_examples:
+        example_.update({"basic_knowledge": context})
 
-    return context,examples
+    return matched_examples
 
 
 @lru_cache(1)
