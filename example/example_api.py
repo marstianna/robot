@@ -17,7 +17,7 @@ async def delete_example():
 
 
 async def query_examples(query: str):
-    examples = example_service.search_examples("测试数据")
+    examples = example_service.search_examples(query)
     print(examples)
     return
 

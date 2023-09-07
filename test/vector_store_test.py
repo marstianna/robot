@@ -29,6 +29,6 @@ if __name__ == "__main__":
     ids = [k for k, v in faiss.docstore._dict.items()]
     faiss.delete(ids)
     faiss.save_local(vs_path)
-    score = faiss.similarity_search_with_score("SG", k=3, score_threshold=1)
+    score = faiss.similarity_search_with_score("印尼部署在什么机房", k=3, score_threshold=1)
     print(score)
 
