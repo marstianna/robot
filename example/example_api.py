@@ -26,7 +26,7 @@ async def query_examples(query: str):
 
     for example in examples:
         template = PromptTemplate(input_variables=["role", "basic_knowledge", "input", "output", "query"],
-                                  template="{role}\n{basic_knowledge}\ninput: {input}\noutput: "
+                                  template="{role}\n{basic_knowledge}\n{action}\ninput: {input}\noutput: "
                                            "{output}\ninput: {query}\noutput: ").partial(
             **example)
         print("template info :"+template.format(query=query))
