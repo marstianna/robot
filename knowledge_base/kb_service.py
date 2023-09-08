@@ -6,3 +6,7 @@ def search_kb(query: str,top_k: int,score_threshold: float):
                                                       knowledge_base_name=basic_knowledge.basic_knowledge_name,
                                                       top_k=top_k, score_threshold=score_threshold)
     print(docs)
+
+
+def add_kb(input: str):
+    basic_knowledge.basic_knowledge.append(input)
