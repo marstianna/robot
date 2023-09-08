@@ -9,6 +9,7 @@ import argparse
 import uvicorn
 from starlette.responses import RedirectResponse
 from example.example_api import add_examples, delete_example, query_examples, list_examples, reload_examples
+from knowledge_base.kb_service import search_kb
 from chat.chat_api import chat
 import config
 from fastapi import FastAPI
@@ -59,6 +60,9 @@ def create_app():
     app.get("/examples/delete",
             tags=["ExampleManager"],
             summary="删除examples")(delete_example)
+    app.get("/kb/search",
+            tags=["KB"],
+            summary="查询KB")(search_kb)
     app.get("/chat",
             tags=["Chat"],
             summary="对话")(chat)
