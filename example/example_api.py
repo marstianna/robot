@@ -34,7 +34,6 @@ async def query_examples(query: str):
         llm_chain = LLMChain(llm=llm_utils.get_llm(), prompt=template, verbose=True)
         result = llm_chain.run(query=query)
         print(result)
-        yield result
 
     # return examples
 
