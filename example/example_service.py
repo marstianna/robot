@@ -27,7 +27,7 @@ def search_examples(query: str = Body(..., description="用户输入", examples=
     # 首先从基础知识库里面检索对应的基础只是
     docs = vector_store_utils.search_in_vector_store(query=query,
                                                      knowledge_base_name=basic_knowledge.basic_knowledge_name,
-                                                     score_threshold=0.8,
+                                                     score_threshold=1,
                                                      top_k=3)
 
     context = "。".join([doc.page_content for doc in docs])
