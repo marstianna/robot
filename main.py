@@ -82,7 +82,7 @@ def run_api(host, port, **kwargs):
 
 
 def init():
-    llm_utils.start_llm()
+    llm_utils.get_llm()
     vector_store_utils.init_vector_store(knowledge_base_name=basic_knowledge.basic_knowledge_name,
                                          docs=[Document(page_content=text, metadata={}) for text in
                                                basic_knowledge.basic_knowledge])
