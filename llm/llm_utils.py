@@ -15,7 +15,7 @@ from llm.chat_glm2 import ChatGLM2
 
 @lru_cache(1)
 def get_llm():
-    return ChatGLM2()
+    return ChatGLM2().load_model()
 
 
 
