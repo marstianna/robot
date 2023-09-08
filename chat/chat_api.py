@@ -27,10 +27,10 @@ async def chat(query: str = Body(..., description="用户输入", examples=["你
                                                "{output}\ninput: {query}\noutput: ").partial(
                 **example)
 
-            llm_chain = LLMChain(llm=llm_utils.get_llm(), prompt=template, verbose=True)
-            result = llm_chain.run(query=query)
-            print(result)
-            yield result
+            print("template info :" + template.format(query=query))
+            call = llm_utils.call(prompt=template.format(query=query), top_k=2)
+            print(call)
+            yield call
 
     return StreamingResponse(chat_iterator(query, examples, top_k),
                              media_type="text/event-stream")

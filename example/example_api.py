@@ -31,9 +31,9 @@ async def query_examples(query: str):
                                            "{output}\ninput: {query}\noutput: ").partial(
             **example)
 
-        llm_chain = LLMChain(llm=llm_utils.get_llm(), prompt=template, verbose=True)
-        result = llm_chain.run(query=query)
-        print(result)
+        print("template info :" + template.format(query=query))
+        call = llm_utils.call(prompt=template.format(query=query), top_k=2)
+        print(call)
 
     # return examples
 
