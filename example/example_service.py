@@ -24,28 +24,31 @@ class DocumentWithScore(Document):
 
 
 def search_examples(query: str = Body(..., description="用户输入", examples=["你好"])):
-    print("input string : "+query)
     # 首先从基础知识库里面检索对应的基础只是
     docs = vector_store_utils.search_in_vector_store(query=query,
                                                      knowledge_base_name=basic_knowledge.basic_knowledge_name,
                                                      score_threshold=0.8,
                                                      top_k=3)
 
-
     context = "。".join([doc.page_content for doc in docs])
-
-    print("search_examples:"+context)
 
     # 获取到根据输入匹配到的对应的examples
     matched_examples = get_example_selector().select_examples({"input": query})
 
-    print(matched_examples)
 
     for example_ in matched_examples:
         example_.update({"basic_knowledge": context})
 
     return context,matched_examples
 
+def add_example(example: dict):
+    if not validate_example():
+        raise ValueError("input example is error")
+    prompt_examples.append(example)
+
+
+def validate_example() -> bool:
+    return True
 
 @lru_cache(1)
 def get_example_selector() -> BaseExampleSelector:
