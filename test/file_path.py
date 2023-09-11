@@ -1,6 +1,11 @@
 import os
 
 if __name__ == "__main__":
-    join = os.path.join(os.path.join("/home/admin/model/downloads/chatGLM2-6", ""), "tokenizer_config.json")
-    print(join)
-    print(os.listdir(join))
+    path_or_repo_id = str("/home/admin/model/downloads/chatGLM2-6B")
+    full_filename = os.path.join("", "config.json")
+    if os.path.isdir(path_or_repo_id):
+        resolved_file = os.path.join(os.path.join(path_or_repo_id, ""), "config.json")
+        print(resolved_file)
+        listdir = os.listdir(resolved_file)
+        if not os.path.isfile(resolved_file):
+            print("not exist")
