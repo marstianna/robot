@@ -5,7 +5,7 @@ VERSION = "1.0.0"
 EMBEDDING_MODEL = "moka-ai/m3e-large"
 
 embedding_model_dict = {
-    "moka-ai/m3e-large": "/home/admin/model/moka-ai_m3e-large",
+    "moka-ai/m3e-large": "/home/admin/model/downloads/moka-ai_m3e-large",
 }
 
 DEVICE = "cuda"

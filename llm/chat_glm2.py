@@ -22,8 +22,8 @@ class ChatGLM2(LLM):
 
     # 定义load_model方法，进行模型的加载
     def load_model(self):
-        self.tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm2-6b",trust_remote_code=True)
-        self.model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).cuda()
+        self.tokenizer = AutoTokenizer.from_pretrained("/home/admin/model/downloads/chatGLM2-6",trust_remote_code=True)
+        self.model = AutoModel.from_pretrained("/home/admin/model/downloads/chatGLM2-6", trust_remote_code=True).cuda()
 
     # 实现_call方法，进行模型的推理
     def _call(self,prompt:str, stop: Optional[List[str]] = None) -> str:
