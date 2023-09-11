@@ -9,8 +9,8 @@ import config
 import database.vector_store_utils
 from knowledge_base import basic_knowledge
 
-tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).cuda()
+tokenizer = AutoTokenizer.from_pretrained("/home/admin/model/downloads/chatGLM2-6", trust_remote_code=True)
+model = AutoModel.from_pretrained("/home/admin/model/downloads/chatGLM2-6", trust_remote_code=True).cuda()
 
 
 def start_llm():
