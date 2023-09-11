@@ -35,7 +35,13 @@ basic_knowledge = [
     "G11nContext.getCurrentRegion()可以获取到当前国家",
     "G11nContext.getCurrentLocale()可以获取到对应国家的Locale实例",
     "G11nContext.getCurrentCurrencyCode()可以获取到当前国家的货币类型",
+    "G11nContext.getCurrentCurrencyCode()可以获取到当前国家的币种",
     "可以通过枚举类com.alibaba.global.landlord.model.ProtocolMode指定对应的通信协议模式，实现通信协议的增强（不侵入业务代码），达到接口按租户裂变，hsf跨单注册，hsf跨单元调用，metaq跨单元消费，metaq跨单元投递等能力。",
     "ProtocolMode.RAW表示原始模式，当模式设置没有配置时，自动生效的默认值",
-
+    "ProtocolMode.MULTI表示当前HSF接口按照租户裂变版本号",
+    "ProtocolMode.MULTI表示当前METAQ按照租户裂变对应的topic和cid",
+    "ProtocolMode.SOURCE_RAW表示跨单元调用老单元的HSF服务，或者跨单元消费老单元的METAQ消息",
+    "ProtocolMode.TARGET_RAW表示从老单元调用目标单元的HSF接口，订阅目标单元的METAQ消息，或者将METAQ消息投递到目标单元",
+    "ProtocolMode.WRAPPER_RAW表示在本单元注册一个版本号为1.0.0_GL的HSF服务",
+    "ProtocolMode.WRAPPER_SOURCE_RAW表示将HSF服务注册到老单元，并在版本号后面追加_GL"
 ]
