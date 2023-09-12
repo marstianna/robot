@@ -36,7 +36,7 @@ basic_knowledge = [
     "G11nContext.getCurrentLocale()可以获取到对应国家的Locale实例",
     "G11nContext.getCurrentCurrencyCode()可以获取到当前国家的货币类型",
     "G11nContext.getCurrentCurrencyCode()可以获取到当前国家的币种",
-    "可以通过枚举类com.alibaba.global.landlord.model.ProtocolMode指定对应的通信协议模式，实现通信协议的增强（不侵入业务代码），达到接口按租户裂变，hsf跨单注册，hsf跨单元调用，metaq跨单元消费，metaq跨单元投递等能力。",
+    "可以通过枚举类com.alibaba.global.landlord.model.ProtocolMode指定对应的通信协议模式，实现通信协议的增强（不侵入业务代码），达到接口按租户裂变，hsf跨单元注册，hsf跨单元调用，metaq跨单元消费，metaq跨单元投递等能力。",
     "ProtocolMode.RAW表示原始模式，当模式设置没有配置时，自动生效的默认值",
     "ProtocolMode.MULTI表示当前HSF接口按照租户裂变版本号",
     "ProtocolMode.MULTI表示当前METAQ按照租户裂变对应的topic和cid",
