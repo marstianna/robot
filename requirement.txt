@@ -1,6 +1,0 @@
-transformers==4.30.2
-langchain==0.0.266
-sentence_transformers
-fastapi~=0.99.1
-uvicorn~=0.23.1
-torch==2.0.1
