@@ -9,7 +9,7 @@ def search_kb(query: str,top_k: int,score_threshold: float,refactor: bool = Fals
     print(docs)
     if refactor:
         context = "\n".join([doc.page_content for doc in docs])
-        context = "针对以下语句，把每一行作为单独语句，然后根据语意将文字内容进行重排序，并润色，但是不能修改其原有内容，也不能新加内容：\n" + context
+        context = "将以下知识库内容:\n"+context+"\n根据语意进行，重新组织语言，使其容易阅读和理解，但是不能修改其原有内容，也不能新加内容。"
         print(llm_utils.call(context))
 
     return docs
