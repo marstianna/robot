@@ -3,6 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/all-MiniLM-L6-v2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/all-MiniLM-L6-v2/bert-base-chinese" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bert-base-chinese" vcs="Git" />
   </component>
 </project>
