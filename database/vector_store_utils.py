@@ -6,7 +6,7 @@ from typing import List
 import os
 
 from langchain.schema import Document
-from langchain.vectorstores.base import VST
+from langchain.vectorstores import FAISS
 
 import config
 from embedding import embedding_utils
@@ -17,7 +17,7 @@ _VECTOR_STORE_TICKS = {}
 class DocumentWithScore(Document):
     score: float = None
 @lru_cache
-def get_vector_store_by_name(knowledge_base_name: str) -> VST:
+def get_vector_store_by_name(knowledge_base_name: str) -> FAISS:
     vs_path = get_vs_path(knowledge_base_name)
     if knowledge_base_name in os.listdir(config.KB_ROOT_PATH):
         return FAISS.load_local(vs_path, embedding_utils.get_embeddings(), normalize_L2=True)
@@ -25,7 +25,7 @@ def get_vector_store_by_name(knowledge_base_name: str) -> VST:
         return init_vector_store(knowledge_base_name, [Document(page_content="init", metadata={})])
 
 
-def init_vector_store(knowledge_base_name: str, docs: List[Document]) -> VST:
+def init_vector_store(knowledge_base_name: str, docs: List[Document]) -> FAISS:
     vs_path = get_vs_path(knowledge_base_name)
     faiss = FAISS.from_documents(docs, embedding_utils.get_embeddings(), normalize_L2=True)
     faiss.save_local(vs_path)

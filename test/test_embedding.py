@@ -1,10 +1,10 @@
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+from gensim import matutils
+from  sentence_transformers import SentenceTransformer,util
 
-import os
 
 
 if __name__ == "__main__":
-    os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
-    embeddings = HuggingFaceEmbeddings(model_name="/home/admin/model/downloads/moka-ai_m3e-large",model_kwargs={'device': "cuda"})
-    print(embeddings.embed_documents(["新加坡的租户标为LAZADA_SG"]))
-    print(embeddings.embed_query(text="新加坡的租户标"))
+    model = SentenceTransformer('/home/kidding/models/all-MiniLM-L6-v2')
+    sentences = ["That is a happy person", "That is a very happy person"]
+    embeddings = model.encode(sentences)
+    print(util.cos_sim(embeddings[0],embeddings[1]))
